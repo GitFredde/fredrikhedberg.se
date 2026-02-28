@@ -358,6 +358,7 @@
     -->
     <svg
       class="bg-illustration"
+      id="bg-illustration"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1200 180"
       preserveAspectRatio="xMidYMax meet"
@@ -764,6 +765,24 @@
             // Tyst fel – bekräftelsen visas ändå
           }
         });
+
+        // ─── Mobilanpassning av SVG-viewBox ──────────────────────────
+        //
+        // På mobil kapas 15% från varje sida (180px av 1200) och höjden
+        // halveras, vilket ger ungefär dubbel zoom på det kvarvarande innehållet.
+        //
+        const svgIllustration = document.getElementById("bg-illustration");
+
+        function updateViewBox() {
+          if (window.innerWidth <= 600) {
+            svgIllustration.setAttribute("viewBox", "180 0 840 180");
+          } else {
+            svgIllustration.setAttribute("viewBox", "0 0 1200 180");
+          }
+        }
+
+        updateViewBox();
+        window.addEventListener("resize", updateViewBox);
 
       })();
     </script>
