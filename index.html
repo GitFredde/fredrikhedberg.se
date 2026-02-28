@@ -138,10 +138,10 @@
         cursor: pointer;
         padding: 0 0 2px 0;
         letter-spacing: 0.02em;
+        text-decoration: none;
+        line-height: inherit;
         transition: color 0.2s var(--transition-ease),
                     border-color 0.2s var(--transition-ease);
-        opacity: 0;
-        animation: fade-in 0.6s var(--transition-ease) 3.2s forwards;
       }
 
       .contact-trigger:hover,
@@ -310,6 +310,46 @@
         opacity: 1;
       }
 
+      /* ─── Åtgärdsrad (kontakt + facebook) ───────────────────────── */
+      .action-row {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        opacity: 0;
+        animation: fade-in 0.6s var(--transition-ease) 3.2s forwards;
+      }
+
+      .action-separator {
+        color: var(--color-subtle);
+        font-size: 1.1rem;
+        line-height: 1;
+      }
+
+      .social-link {
+        background: none;
+        border: none;
+        border-bottom: 1px solid var(--color-text);
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-size: inherit;
+        font-weight: 300;
+        cursor: pointer;
+        padding: 0 0 2px 0;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        display: inline-block;
+        line-height: inherit;
+        transition: color 0.2s var(--transition-ease),
+                    border-color 0.2s var(--transition-ease);
+      }
+
+      .social-link:hover,
+      .social-link:focus-visible {
+        color: var(--color-subtle);
+        border-color: var(--color-subtle);
+        outline: none;
+      }
+
       @media (max-width: 600px) {
         .bg-illustration {
           height: 260px;
@@ -329,7 +369,7 @@
       @media (prefers-reduced-motion: reduce) {
         .label,
         .tagline,
-        .contact-trigger,
+        .action-row,
         .bg-illustration {
           animation: none;
           opacity: 1;
@@ -552,14 +592,26 @@
 
       <p class="tagline">— Fredrik Hedberg</p>
 
-      <button
-        class="contact-trigger"
-        type="button"
-        aria-haspopup="dialog"
-        aria-controls="contact-modal"
-      >
-        kontakta mig
-      </button>
+      <nav class="action-row" aria-label="Kontakt och sociala medier">
+        <a
+          class="contact-trigger"
+          role="button"
+          tabindex="0"
+          aria-haspopup="dialog"
+          aria-controls="contact-modal"
+        >
+          kontakta mig
+        </a>
+        <span class="action-separator" aria-hidden="true">·</span>
+        <a
+          class="social-link"
+          href="https://www.facebook.com/hedfred"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          facebook
+        </a>
+      </nav>
 
     </main>
 
@@ -725,6 +777,12 @@
         }
 
         openBtn.addEventListener("click", openModal);
+        openBtn.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openModal();
+          }
+        });
         closeBtn.addEventListener("click", closeModal);
 
         overlay.addEventListener("click", (event) => {
